@@ -50,3 +50,10 @@ TalentLens is an intelligent, easy-to-use recruitment tool built with Machine Le
 ```bash
 git clone https://github.com/adwaith620/ML-PROJECT-LINKEDIN.git
 cd ML-PROJECT-LINKEDIN
+```
+
+### 2. Start the Application on Windows
+
+Install Python 3.11+ and Node.js 18+ with npm, then double-click `run_local.bat` from the repository folder. The first run creates a `.venv`, installs the web app dependencies from `requirements-app.txt`, installs the frontend dependencies with `npm install`, and opens both services in separate windows. Initial setup may take several minutes and requires an internet connection. Sentence-BERT is optional; without it, analysis uses the classical TF-IDF fallback. The full `requirements.txt` is for notebooks and model development.
+
+The app opens at http://127.0.0.1:5173. The backend API documentation is at http://127.0.0.1:8000/docs. Later runs reuse the installed dependencies.

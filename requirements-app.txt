@@ -1,0 +1,10 @@
+# Dependencies required to run the local web application.
+fastapi
+uvicorn
+python-multipart
+pypdf
+python-docx
+reportlab
+pandas
+numpy
+scikit-learn

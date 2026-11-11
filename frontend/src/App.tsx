@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Upload,
   FileText,
@@ -11,13 +11,11 @@ import {
   FileCheck,
   X,
   FileUp,
-  Sun,
-  Moon,
   Zap,
   Sparkles,
   Info,
 } from 'lucide-react';
-import { AnalysisResult, BackendHealth } from './types';
+import { AnalysisResult } from './types';
 import './styles.css';
 
 export const App: React.FC = () => {
@@ -32,40 +30,10 @@ export const App: React.FC = () => {
   const [stageProgress, setStageProgress] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
-  const [health, setHealth] = useState<BackendHealth | null>(null);
   const [copyFeedback, setCopyFeedback] = useState<boolean>(false);
-
-  // Light mode is the default; preserve an explicit saved theme choice.
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
-    const savedTheme = localStorage.getItem('talentlens_theme');
-    return savedTheme === 'dark';
-  });
 
   const resumeInputRef = useRef<HTMLInputElement>(null);
   const jdFileInputRef = useRef<HTMLInputElement>(null);
-
-  // Sync theme changes to body class and localStorage
-  useEffect(() => {
-    if (isDarkMode) {
-      document.body.classList.add('dark-theme');
-      localStorage.setItem('talentlens_theme', 'dark');
-    } else {
-      document.body.classList.remove('dark-theme');
-      localStorage.setItem('talentlens_theme', 'light');
-    }
-  }, [isDarkMode]);
-
-  // Check backend health on mount
-  useEffect(() => {
-    fetch('/api/health')
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data: BackendHealth | null) => {
-        if (data) setHealth(data);
-      })
-      .catch((err) => {
-        console.warn('Backend health check error:', err);
-      });
-  }, []);
 
   // Drag and drop handling
   const [isDragOver, setIsDragOver] = useState<boolean>(false);
@@ -319,27 +287,6 @@ Additional Skills: ${additional}`;
           </div>
         </div>
 
-        <div className="header-controls">
-          {/* Dark Mode Toggle Button */}
-          <button
-            type="button"
-            className="theme-toggle-btn"
-            onClick={() => setIsDarkMode((prev) => !prev)}
-            aria-label={isDarkMode ? 'Switch to light theme' : 'Switch to dark theme'}
-            title={isDarkMode ? 'Switch to light theme' : 'Switch to dark theme'}
-          >
-            {isDarkMode ? <Sun size={15} /> : <Moon size={15} />}
-            <span>{isDarkMode ? 'Light Mode' : 'Dark Mode'}</span>
-          </button>
-
-          {/* Backend Status Indicator */}
-          <div className="header-status">
-            <div className={`status-dot ${health?.status === 'healthy' ? 'active' : ''}`} />
-            <span>
-              {health?.status === 'healthy' ? 'AI analysis ready' : 'Connecting to analysis service'}
-            </span>
-          </div>
-        </div>
       </header>
 
       {/* Global Error Alert */}

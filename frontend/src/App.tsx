@@ -302,7 +302,7 @@ Additional Skills: ${additional}`;
         <>
           <div className="workspace-grid">
             {/* Panel 1: Resume Upload */}
-            <div className="panel-card">
+            <div className="panel-card resume-panel">
               <div className="panel-header">
                 <div>
                   <h2 className="panel-title">Candidate resume</h2>
@@ -310,6 +310,8 @@ Additional Skills: ${additional}`;
                 </div>
                 <span className="limit-badge">Max 25 MB • 100 pgs</span>
               </div>
+
+              <img className="resume-figure" src="/color/3.png" alt="" aria-hidden="true" />
 
               {!resumeFile ? (
                 <div
@@ -364,7 +366,7 @@ Additional Skills: ${additional}`;
             </div>
 
             {/* Panel 2: Job Description */}
-            <div className="panel-card">
+            <div className="panel-card job-description-panel">
               <div className="panel-header">
                 <div>
                   <h2 className="panel-title">Job description</h2>

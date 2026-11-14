@@ -1,28 +1,26 @@
-# Core ML & Data Science
+# absolutely necessary
 pandas
 numpy
 scikit-learn
 
-# Jupyter
 jupyter
 ipykernel
 
-# HuggingFace Ecosystem
+# huggingface
 datasets
 huggingface_hub
 sentence-transformers
 transformers
 torch
 
-# NLP
+# nlprocess
 spacy
 nltk
 
-# Visualization
 matplotlib
 seaborn
 
-# Backend & Document Processing
+# backend(heh)
 fastapi
 uvicorn
 python-multipart

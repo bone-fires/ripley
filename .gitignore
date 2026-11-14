@@ -1,29 +1,17 @@
-# =========================
-# Python
-# =========================
 __pycache__/
 *.py[cod]
 *$py.class
 *.pyo
 *.pyd
 
-# =========================
-# Jupyter Notebook
-# =========================
 .ipynb_checkpoints/
 
-# =========================
-# Virtual Environments
-# =========================
 .env
 .venv/
 env/
 venv/
 ENV/
 
-# =========================
-# IDE / Editor
-# =========================
 .vscode/
 .idea/
 *.swp
@@ -32,9 +20,6 @@ ENV/
 .DS_Store
 Thumbs.db
 
-# =========================
-# Raw Datasets & Large Files
-# =========================
 *.csv
 *.tsv
 *.parquet
@@ -46,9 +31,6 @@ data/raw/
 data/processed/
 !data/README.md
 
-# =========================
-# Model Weights & Checkpoints
-# =========================
 *.pkl
 *.pickle
 *.joblib
@@ -61,17 +43,11 @@ models/weights/
 models/checkpoints/
 !models/README.md
 
-# =========================
-# PyTorch / HuggingFace
-# =========================
 runs/
 lightning_logs/
 wandb/
 *.ckpt
 
-# =========================
-# Distribution / Packaging
-# =========================
 dist/
 build/
 *.egg-info/
@@ -79,9 +55,6 @@ build/
 frontend/dist/
 frontend/node_modules/
 
-# =========================
-# Logs & Temp
-# =========================
 *.log
 logs/
 tmp/

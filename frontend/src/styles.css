@@ -1441,15 +1441,13 @@ select,
 }
 
 .resume-panel {
-  background-image: url('/color/4.jpg');
-  background-position: left center;
-  background-size: cover;
+  background-image: none;
+  background-color: transparent;
 }
 
 .job-description-panel {
-  background-image: url('/color/2.jpg');
-  background-position: center;
-  background-size: cover;
+  background-image: none;
+  background-color: transparent;
 }
 
 .resume-figure {
@@ -1477,11 +1475,21 @@ select,
 }
 
 .resume-panel .dropzone {
-  background-color: rgba(234, 241, 255, 0.78);
+  background-color: transparent;
 }
 
 .job-description-panel .jd-textarea {
-  background-color: rgba(255, 255, 255, 0.82);
+  background-color: transparent;
+}
+
+.resume-panel .file-selected-box {
+  background-color: transparent;
+}
+
+.resume-panel .dropzone:hover,
+.resume-panel .dropzone.active,
+.job-description-panel .jd-textarea:focus {
+  background-color: transparent;
 }
 
 @media (max-width: 860px) {
@@ -1519,4 +1527,22 @@ select,
   .resume-panel .panel-header {
     padding-right: 34px;
   }
+}
+
+.action-bar > .btn-primary {
+  background-color: transparent;
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-accent);
+  box-shadow: none;
+}
+
+.action-bar {
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.action-bar > .btn-primary:hover:not(:disabled) {
+  background-color: transparent;
+  color: var(--color-accent-hover);
 }

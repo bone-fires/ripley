@@ -61,12 +61,12 @@ export const App: React.FC = () => {
     const ext = '.' + file.name.split('.').pop()?.toLowerCase();
 
     if (!validExtensions.includes(ext)) {
-      setError(`Unsupported file type '${ext}'. Please upload a PDF, DOCX, or TXT file.`);
+      setError(`I don't support this '${ext}'. I but support PDF, DOCX, and TXT.`);
       return;
     }
 
     if (file.size > 25 * 1024 * 1024) {
-      setError(`File exceeds the 25 MB size limit (${(file.size / (1024 * 1024)).toFixed(2)} MB).`);
+      setError(`Exceeds size limit (${(file.size / (1024 * 1024)).toFixed(2)} MB).`);
       return;
     }
 
@@ -79,12 +79,12 @@ export const App: React.FC = () => {
     const ext = '.' + file.name.split('.').pop()?.toLowerCase();
 
     if (!validExtensions.includes(ext)) {
-      setError(`Unsupported job description document '${ext}'. Please select a PDF, DOCX, or TXT file.`);
+      setError(`Unbelievable. '${ext}'. Use PDF, DOCX, or TXT.`);
       return;
     }
 
     if (file.size > 10 * 1024 * 1024) {
-      setError(`JD document exceeds the 10 MB size limit.`);
+      setError(`You're too big.`);
       return;
     }
 
@@ -94,12 +94,12 @@ export const App: React.FC = () => {
   // Submit Analysis
   const handleAnalyze = async () => {
     if (!resumeFile) {
-      setError('Please provide a candidate resume.');
+      setError('Resume, please.');
       return;
     }
 
     if (!jdText.trim() && !jdFile) {
-      setError('Please paste a job description or upload a JD document.');
+      setError('Job description - anyday now.');
       return;
     }
 
@@ -107,8 +107,7 @@ export const App: React.FC = () => {
     setLoading(true);
     setAnalysisResult(null);
 
-    // Staged progress updates
-    setCurrentStage('Uploading document to analysis engine...');
+    setCurrentStage('Uploading...');
     setStageProgress(20);
 
     const formData = new FormData();
@@ -122,12 +121,12 @@ export const App: React.FC = () => {
 
     try {
       const stageTimer1 = setTimeout(() => {
-        setCurrentStage('Extracting document text and parsing requirements...');
+        setCurrentStage('Reading....');
         setStageProgress(45);
       }, 500);
 
       const stageTimer2 = setTimeout(() => {
-        setCurrentStage('Classifying exact, alias & related skills and computing ML embeddings...');
+        setCurrentStage('Getting concerned with what I am reading.....');
         setStageProgress(75);
       }, 1200);
 
@@ -144,13 +143,13 @@ export const App: React.FC = () => {
         throw new Error(errorData.detail || `Server error (${res.status})`);
       }
 
-      setCurrentStage('Finalizing compatibility report...');
+      setCurrentStage('Finally....');
       setStageProgress(100);
 
       const data: AnalysisResult = await res.json();
       setAnalysisResult(data);
     } catch (err: any) {
-      setError(err.message || 'An error occurred during analysis.');
+      setError(err.message || 'My bad.');
     } finally {
       setLoading(false);
       setCurrentStage('');
@@ -169,7 +168,7 @@ export const App: React.FC = () => {
         body: JSON.stringify(analysisResult),
       });
 
-      if (!res.ok) throw new Error('Failed to generate PDF');
+      if (!res.ok) throw new Error('No PDF for you.');
 
       const blob = await res.blob();
       const url = window.URL.createObjectURL(blob);
@@ -305,10 +304,10 @@ Additional Skills: ${additional}`;
             <div className="panel-card resume-panel">
               <div className="panel-header">
                 <div>
-                  <h2 className="panel-title">Candidate resume</h2>
-                  <p className="panel-desc">Upload candidate resume in PDF, DOCX, or TXT format.</p>
+                  <h2 className="panel-title">Resume</h2>
+                  <p className="panel-desc">Upload.</p>
                 </div>
-                <span className="limit-badge">Max 25 MB • 100 pgs</span>
+                <span className="limit-badge"> 25 MB • 100 pgs</span>
               </div>
 
               <img className="resume-figure" src="/color/3.png" alt="" aria-hidden="true" />
@@ -330,8 +329,8 @@ Additional Skills: ${additional}`;
                   aria-label="Upload candidate resume"
                 >
                   <Upload className="dropzone-icon" size={32} />
-                  <p className="dropzone-text">Click to browse or drag and drop resume</p>
-                  <p className="dropzone-subtext">PDF, DOCX, or TXT up to 25 MB</p>
+                  <p className="dropzone-text">Browse or drag.</p>
+                  <p className="dropzone-subtext">PDF, DOCX, or TXT.</p>
                   <input
                     ref={resumeInputRef}
                     type="file"
@@ -369,10 +368,10 @@ Additional Skills: ${additional}`;
             <div className="panel-card job-description-panel">
               <div className="panel-header">
                 <div>
-                  <h2 className="panel-title">Job description</h2>
-                  <p className="panel-desc">Paste the job posting text or upload a job document.</p>
+                  <h2 className="panel-title">Job</h2>
+                  <p className="panel-desc">Paste or upload criterion.</p>
                 </div>
-                <span className="limit-badge">Max 10 MB</span>
+                <span className="limit-badge">10 MB</span>
               </div>
 
               {jdFile ? (
@@ -396,7 +395,7 @@ Additional Skills: ${additional}`;
               ) : (
                 <textarea
                   className="jd-textarea"
-                  placeholder="Paste the job description here... (e.g., Senior Python Developer required. Must have strong skills in Python, FastAPI, Docker, and PostgreSQL. Preferred: Kubernetes, Redis...)"
+                  placeholder="Paste here (e.g., In the beginning, the Universe was created. This has made a lot of people very angry and been widely regarded as a bad move.)"
                   value={jdText}
                   onChange={(e) => setJdText(e.target.value)}
                   disabled={loading}
@@ -440,7 +439,7 @@ Additional Skills: ${additional}`;
           {/* Action Bar */}
           <div className="action-bar">
             <div className="method-select-group">
-              <label htmlFor="method-select">Matching Methodology:</label>
+              <label htmlFor="method-select">Matching:</label>
               <select
                 id="method-select"
                 className="method-select"
@@ -448,9 +447,9 @@ Additional Skills: ${additional}`;
                 onChange={(e) => setPreferredMethod(e.target.value)}
                 disabled={loading}
               >
-                <option value="auto">Sentence-BERT + Classical TF-IDF (Hybrid)</option>
-                <option value="semantic">Sentence-BERT Only</option>
-                <option value="classical">Classical Baseline (TF-IDF)</option>
+                <option value="auto">Trail Mix</option>
+                <option value="semantic">S-BERT</option>
+                <option value="classical">Classic</option>
               </select>
             </div>
 
@@ -468,7 +467,7 @@ Additional Skills: ${additional}`;
           {loading && (
             <div className="progress-card">
               <div className="stage-label">{currentStage}</div>
-              <div className="stage-subtext">Executing NLP & ML pipeline locally...</div>
+              <div className="stage-subtext">The pipe and it’s lines</div>
               <div className="progress-track">
                 <div className="progress-bar-fill" style={{ width: `${stageProgress}%` }} />
               </div>
@@ -483,7 +482,7 @@ Additional Skills: ${additional}`;
           {/* Action Header */}
           <div className="report-action-header">
             <div className="report-title-group">
-              <h2>Candidate match report</h2>
+              <h2>Report</h2>
               <p>
                 Resume: <b>{analysisResult.resume_filename}</b> vs. <b>{analysisResult.jd_filename}</b>
               </p>
@@ -492,11 +491,11 @@ Additional Skills: ${additional}`;
             <div className="action-buttons">
               <button className="btn-secondary" onClick={handleDownloadPdf} title="Download ReportLab PDF">
                 <Download size={15} />
-                <span>Download PDF</span>
+                <span>PDF veno?</span>
               </button>
               <button className="btn-secondary" onClick={handleExportJson} title="Export Structured JSON">
                 <FileText size={15} />
-                <span>Export JSON</span>
+                <span>JSON veno?</span>
               </button>
               <button className="btn-secondary" onClick={handleCopySummary} title="Copy match summary">
                 <Copy size={15} />
@@ -504,7 +503,7 @@ Additional Skills: ${additional}`;
               </button>
               <button className="btn-primary" onClick={handleReset}>
                 <RotateCcw size={15} />
-                <span>Analyse another candidate</span>
+                <span>NEXT</span>
               </button>
             </div>
           </div>
@@ -526,7 +525,7 @@ Additional Skills: ${additional}`;
               <span className={`score-badge-tag ${getRecommendationTagClass(analysisResult.recommendation)}`}>
                 {getAlignmentLabel(analysisResult.overall_score)}
               </span>
-              <p className="score-meaning">A comparison of resume evidence with the requirements in this job description.</p>
+              <p className="score-meaning">Comparison.</p>
             </div>
 
             <div className="score-details-pane">
@@ -561,7 +560,7 @@ Additional Skills: ${additional}`;
           </div>
 
           <p className="decision-note">
-            This is a decision-support estimate, not a hiring decision. A skill not found in the resume may still be part of the candidate’s experience.
+            Please don’t take this as the do all-be all of your executive hiring decisions..
           </p>
 
           {/* Section Parsing Notice */}
@@ -580,8 +579,8 @@ Additional Skills: ${additional}`;
           <details className="skills-card technical-details">
             <summary>
               <span>
-                <strong>How the score is calculated</strong>
-                <small>Review the matching signals, model, and score contributions.</small>
+                <strong>How calculation? We will tell you</strong>
+                <small>Review.</small>
               </span>
             </summary>
             <p className="technical-model"><b>Analysis method:</b> {analysisResult.analysis_method}</p>
@@ -642,10 +641,10 @@ Additional Skills: ${additional}`;
             <div className="panel-header">
               <div>
                 <h3 className="panel-title">
-                  Required skills found ({analysisResult.matched_skills.length})
+                  Skills found ({analysisResult.matched_skills.length})
                 </h3>
                 <p className="panel-desc">
-                  Required competencies from the job description that were evidenced in the candidate's resume, classified by match type.
+                  Everything our guy has.
                 </p>
               </div>
               <span className="limit-badge" style={{ color: 'var(--color-success)', background: 'var(--color-success-light)' }}>
@@ -703,7 +702,7 @@ Additional Skills: ${additional}`;
                           <div className="evidence-quote">"{item.evidence[0]}"</div>
                         ) : (
                           <span style={{ color: 'var(--color-text-muted)', fontSize: 12 }}>
-                            Identified via technical entity recognition
+                            Identified via technical ER
                           </span>
                         )}
                       </td>
@@ -713,7 +712,7 @@ Additional Skills: ${additional}`;
               </table>
             ) : (
               <p style={{ color: 'var(--color-text-muted)', fontSize: 13, marginTop: 8 }}>
-                No overlapping skills detected between the resume and job requirements.
+                No overlapping skills.
               </p>
             )}
           </div>
@@ -724,8 +723,8 @@ Additional Skills: ${additional}`;
               Skills not found in the resume ({analysisResult.missing_required_skills.length})
             </h3>
             <p className="panel-desc">
-              Skills detected in the job posting that were <b>not found or evidenced</b> in the resume text.
-              (Note: Absence of a term in the document does not necessarily mean the candidate lacks the skill).
+              Skills our guy <b>does not possess</b> atleast according to the resume.
+              (Note: Absence does not indicate lack).
             </p>
 
             <div className="skills-grid">
@@ -738,7 +737,7 @@ Additional Skills: ${additional}`;
                 ))
               ) : (
                 <span style={{ color: 'var(--color-success)', fontSize: 13, fontWeight: 500 }}>
-                  ✓ All required skills from the job description were evidenced in the resume.
+                  ✓ Skills our guy has.
                 </span>
               )}
             </div>
@@ -752,10 +751,10 @@ Additional Skills: ${additional}`;
                 <div>
                   <h3 className="panel-title">
                     <Sparkles size={16} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 6, color: 'var(--color-preferred)' }} />
-                    Preferred / Desirable Qualifications
+                    Preferred Qualifications
                   </h3>
                   <p className="panel-desc">
-                    Secondary skills identified from the 'Nice to Have' or 'Preferred' sections. Matched preferred skills provide bonus score points.
+                    Secondary skills that would be an assset to the economy -hopefully.
                   </p>
                 </div>
                 <span className="limit-badge" style={{ color: 'var(--color-preferred)', background: 'var(--color-preferred-light)' }}>
@@ -766,7 +765,7 @@ Additional Skills: ${additional}`;
               {analysisResult.matched_preferred && analysisResult.matched_preferred.length > 0 && (
                 <div style={{ marginBottom: 12 }}>
                   <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-text-secondary)', marginBottom: 6 }}>
-                    Evidenced Preferred Skills:
+                    Evidenced Skills:
                   </div>
                   <div className="skills-grid">
                     {analysisResult.matched_preferred.map((item, idx) => (
@@ -782,7 +781,7 @@ Additional Skills: ${additional}`;
               {analysisResult.missing_preferred_skills && analysisResult.missing_preferred_skills.length > 0 && (
                 <div>
                   <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-text-muted)', marginBottom: 6 }}>
-                    Un-evidenced Preferred Skills:
+                    Un-evidenced Skills:
                   </div>
                   <div className="skills-grid">
                     {analysisResult.missing_preferred_skills.map((skill, idx) => (
@@ -803,7 +802,7 @@ Additional Skills: ${additional}`;
                 Other skills found ({analysisResult.additional_skills.length})
               </h3>
               <p className="panel-desc">
-                Competencies found in the candidate's resume that were not explicitly listed as job requirements.
+                Additional skills the guy had that nobody asked for.
               </p>
 
               <div className="skills-grid">

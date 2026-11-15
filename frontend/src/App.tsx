@@ -64,15 +64,11 @@ export const App: React.FC = () => {
   const resumeInputRef = useRef<HTMLInputElement>(null);
   const jdInputRef     = useRef<HTMLInputElement>(null);
 
-  // JD interaction: single click/file picker, double click/tap -> terminal
+  // Click-counter refs for JD single vs double-click discrimination
   const jdClickCount = useRef(0);
   const jdClickTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const jdTouchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const jdLastTouchTime = useRef(0);
 
-  const openJdTerminal = () => {
-    setShowTerminal(true);
-  };
+  // ── JD image: single-click → file browser, double-click → terminal ────────
 
   const handleJdImageClick = () => {
     jdClickCount.current += 1;
@@ -84,31 +80,13 @@ export const App: React.FC = () => {
       jdClickTimer.current = null;
 
       if (count >= 2) {
-        openJdTerminal();
+        // Double (or rapid multi) click → open terminal
+        setShowTerminal(true);
       } else {
+        // Single click → file browser
         jdInputRef.current?.click();
       }
-    }, 260);
-  };
-
-  const handleJdTouchEnd = (e: React.TouchEvent) => {
-    const now = Date.now();
-    const delta = now - jdLastTouchTime.current;
-    jdLastTouchTime.current = now;
-
-    if (delta < 280) {
-      e.preventDefault();
-      if (jdTouchTimer.current) clearTimeout(jdTouchTimer.current);
-      jdTouchTimer.current = null;
-      openJdTerminal();
-      return;
-    }
-
-    if (jdTouchTimer.current) clearTimeout(jdTouchTimer.current);
-    jdTouchTimer.current = setTimeout(() => {
-      jdInputRef.current?.click();
-      jdTouchTimer.current = null;
-    }, 260);
+    }, 280);
   };
 
   const handleJdKeyDown = (e: React.KeyboardEvent) => {
@@ -118,7 +96,7 @@ export const App: React.FC = () => {
     }
     if (e.key === 'F2') {
       e.preventDefault();
-      openJdTerminal();
+      setShowTerminal(true);
     }
   };
 
@@ -338,15 +316,13 @@ export const App: React.FC = () => {
           <div
             className={`asset-zone asset-jd${jdDragOver ? ' drag-over' : ''}${jdFile ? ' has-file' : ''}`}
             onClick={handleJdImageClick}
-            onDoubleClick={(e) => { e.preventDefault(); openJdTerminal(); }}
-            onTouchEnd={handleJdTouchEnd}
             onKeyDown={handleJdKeyDown}
             onDragOver={e => { e.preventDefault(); setJdDragOver(true); }}
             onDragLeave={() => setJdDragOver(false)}
             onDrop={handleJdDrop}
             role="button"
             tabIndex={0}
-            aria-label="Job description — click to browse, double-click or double-tap to type, F2 to type"
+            aria-label="Job description — click to browse, double-click to type, F2 to type"
           >
             <img src="/color/4.png" alt="Description" className="asset-img" draggable={false} />
             {jdFile && (

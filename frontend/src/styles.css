@@ -57,9 +57,6 @@ body {
   cursor: pointer;
   user-select: none;
   outline: none;
-  overflow: hidden;
-  isolation: isolate;
-  background: transparent;
 }
 
 .asset-zone:focus-visible {
@@ -177,9 +174,8 @@ body {
 .asset-jd {
   left: 0;
   top: 0;
-  width: min(23vw, 300px);
-  height: 54vh;
-  min-height: 280px;
+  width: 25vw;
+  height: 62vh;
   z-index: 15;
 }
 
@@ -189,9 +185,8 @@ body {
 .asset-resume {
   right: 0;
   top: 0;
-  width: min(23vw, 300px);
-  height: 54vh;
-  min-height: 280px;
+  width: 24vw;
+  height: 58vh;
   z-index: 15;
 }
 
@@ -199,10 +194,10 @@ body {
    3.png — CENTRE HANDS  (full height, shifted left, complete image)
 ═══════════════════════════════════════════════════════════════ */
 .asset-centre {
-  left: 50%;
+  left: 46%;
   top: 0;
   transform: translateX(-50%);
-  width: min(52vw, 720px);
+  width: 100vh;
   height: 100vh;
   z-index: 10;
   /* No glint on centre — it is a trigger, not an upload target */
